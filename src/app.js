@@ -1,8 +1,18 @@
+'use strict';
+
 const express = require('express');
+const path = require('path');
+const routes = require('./routes');
+
 const app = express();
 
-app.get('/health', (req, res) => {
-  res.json({ status: 'ok', timestamp: new Date().toISOString() });
-});
+// Parse JSON bodies
+app.use(express.json());
+
+// Serve static frontend files
+app.use(express.static(path.join(__dirname, '..', 'public')));
+
+// API routes
+app.use(routes);
 
 module.exports = app;
